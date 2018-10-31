@@ -26,7 +26,7 @@ public class JelasticConfig {
         HashMap<String, URI> configuration = new HashMap<>();
         configuration.put("activemq-consumer",new URI(resolveProp(AMQ_CONS_HOST),"/actuator/health",8080));
         configuration.put("activemq-producer",new URI(resolveProp(AMQ_PROD_HOST),"/actuator/health",8080));
-        configuration.put("activemq-broker",new URI(resolveProp(AMQ_BROKER_HOST),8080));
+        configuration.put("activemq-broker",new URI(resolveProp(AMQ_BROKER_HOST),61616));
         return configuration;
     }
 
