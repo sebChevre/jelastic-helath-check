@@ -13,19 +13,19 @@ import java.util.HashMap;
 @Profile("jelastic")
 public class JelasticConfig {
 
-    @Value("#{systemProperties['activemq-consumer.host']}")
+    @Value("${activemq-consumer.host}")
     private String AMQ_CONSUMER_HOST;
-    @Value("#{systemProperties['activemq-consumer.port']}")
+    @Value("${activemq-consumer.port}")
     private String AMQ_CONSUMER_PORT;
 
-    @Value("#{systemProperties['activemq-producer.host']}")
+    @Value("${activemq-producer.host}")
     private String AMQ_PRODUCER_HOST;
-    @Value("#{systemProperties['activemq-producer.port']}")
+    @Value("${activemq-producer.port}")
     private String AMQ_PRODUCER_PORT;
 
-    @Value("#{systemProperties['activemq-broker.host']}")
+    @Value("${activemq-broker.host}")
     private String AMQ_BROKER_HOST;
-    @Value("#{systemProperties['activemq-broker.port']}")
+    @Value("${activemq-broker.port}")
     private String AMQ_BROKER_PORT;
 
     @Bean
