@@ -14,9 +14,11 @@ import java.util.HashMap;
 
 public class PutStructurizrDeploymentView {
 
-    private static final long WORKSPACE_ID = 41014;
-    private static final String API_KEY = "a0d9b4c1-229e-470d-b6d4-cad5ccc6e03e ";
-    private static final String API_SECRET = "6e12e01a-a5a2-4c63-989e-f79cf9338062";
+    private static final long WORKSPACE_ID = 41031;
+    private static final String API_KEY = "47b76a63-9bb3-4de0-a38c-0f717faec340";
+    private static final String API_SECRET = "6c7f244e-2cb1-46cc-946c-93d2daa23ba0";
+
+    private final static String HEALTHCCHECK_URI = "http://node4134-env-6438346.jcloud.ik-server.com";
 
     private static final String JMS_TAG = "jms";
 
@@ -31,7 +33,7 @@ public class PutStructurizrDeploymentView {
         Model model = workspace.getModel();
         ViewSet views = workspace.getViews();
 
-        SoftwareSystem structurizr = model.addSoftwareSystem("Structurizr", "A publishing platform for software architecture diagrams and documentation based upon the C4 model.");
+        SoftwareSystem structurizr = model.addSoftwareSystem("Structurizr2", "A publishing platform for software architecture diagrams and documentation based upon the C4 model.");
 
         //Containers
         Container activeMqConsumer = structurizr.addContainer("activemq-consumer", "Provides all of the server-side functionality of Structurizr, serving static and dynamic content to users.", "Java and Spring MVC");
@@ -56,10 +58,10 @@ public class PutStructurizrDeploymentView {
         DeploymentNode activemqEnv = jelastic.addDeploymentNode("Environnement ActiveMQ", "", "");
 
         ContainerInstance activeMqContainer = activemqEnv.add(activeMqBroker);
-        activeMqContainer.addHealthCheck("ActiveMQ Broker status", "localhost:8080/actuator/health");
+        activeMqContainer.addHealthCheck("ActiveMQ Broker status", HEALTHCCHECK_URI+" /health?nodeId=activemq-broker");
 
         ContainerInstance healthCeckContainer = activemqEnv.add(healthCheck);
-        healthCeckContainer.addHealthCheck("HealthCheck status", "localhost:8080/actuator/health");
+        healthCeckContainer.addHealthCheck("HealthCheck status", HEALTHCCHECK_URI);
 
         //environnement services
         DeploymentNode serviceEnv = jelastic.addDeploymentNode("Envirnnement Service", "", "");
@@ -67,10 +69,10 @@ public class PutStructurizrDeploymentView {
 
 
         ContainerInstance consumerContainer = serviceEnv.add(activeMqConsumer);
-        consumerContainer.addHealthCheck("Consumer status","");
+        consumerContainer.addHealthCheck("Consumer status",HEALTHCCHECK_URI+" /health?nodeId=activemq-consumer");
 
         ContainerInstance producerContainer = serviceEnv.add(activeMqProducer);
-        producerContainer.addHealthCheck("Producer status","");
+        producerContainer.addHealthCheck("Producer status",HEALTHCCHECK_URI+" /health?nodeId=activemq-producer");
 
 
 
@@ -84,6 +86,8 @@ public class PutStructurizrDeploymentView {
 
 
         structurizrClient.putWorkspace(WORKSPACE_ID, workspace);
+
+
     }
 
 
