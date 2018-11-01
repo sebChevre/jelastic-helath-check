@@ -1,5 +1,6 @@
 package ch.sebooom.tcphealthcheck.application;
 
+import ch.sebooom.tcphealthcheck.application.config.URI;
 import ch.sebooom.tcphealthcheck.infrastructure.HttpHealthCheck;
 import ch.sebooom.tcphealthcheck.infrastructure.TcpHealthCheck;
 import lombok.AllArgsConstructor;
